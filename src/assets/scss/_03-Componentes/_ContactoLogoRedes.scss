@@ -1,222 +1,154 @@
-//---------contenedores header--------------------//
-.gridPadreContacto1 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  justify-content: center;
-  align-items: start;
-  margin: 0 auto;
-  max-width: 1050px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e0e0e0;
+/* ESTILOS CONTACTOLOGOREDES - SIN FIXED */
+
+.contacto-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-@media (max-width: 768px) {
-  .gridPadreContacto1 {
-    padding: 15px;
-    gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-@media (max-width: 480px) {
-  .gridPadreContacto1 {
-    padding: 10px;
-    gap: 10px;
-  }
-}
-
-//---------logo header--------------------//
-.contact-logo-rede-container {
+.contacto-content {
+  background: rgba(128, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 1.2rem 1rem;
+  box-shadow: 0 4px 12px rgba(128, 0, 0, 0.1);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f8f9fa;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .contact-logo-rede-container {
-    gap: 15px;
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-logo-rede-container {
-    gap: 10px;
-    padding: 10px;
-  }
-}
-
-//---------logo main--------------------//
+/* Estilos para logos */
 .logo-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 8px;
-  padding: 20px;
-  width: 100%;
-  max-width: 600px;
-  background-color: white;
+  gap: 1rem;
 }
 
-@media (max-width: 768px) {
-  .logo-column {
-    max-width: 300px;
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo-column {
-    max-width: 100%;
-    padding: 10px;
-  }
-}
-
-.logo-main {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease;
-
+.logo-main-link {
+  display: block;
+  transition: transform 0.3s ease;
+  
   &:hover {
     transform: scale(1.05);
   }
 }
 
-//---------logo secondary--------------------//
+.logo-main {
+  max-width: 100%;
+  height: auto;
+}
+
 .logo-secondary-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
-.logoPuchulita {
-  width: 180px;
-  height: auto;
+.logo-secondary-link {
+  display: block;
   transition: transform 0.3s ease;
-  position: relative;
-  z-index: 10;
-}
-
-@media (max-width: 768px) {
-  .logoPuchulita {
-    width: 140px;
-  }
-}
-
-@media (max-width: 480px) {
-  .logoPuchulita {
-    width: 120px;
+  
+  &:hover {
+    transform: scale(1.1);
   }
 }
 
 .logo-secondary {
   width: 80px;
   height: auto;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
+  border-radius: 8px;
 }
 
-@media (max-width: 768px) {
-  .logo-secondary {
-    width: 70px;
-  }
-}
-
-@media (max-width: 480px) {
-  .logo-secondary {
-    width: 60px;
-  }
-}
-
-//---------contact icons--------------------//
+/* Estilos para contactos */
 .contact-icons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 20px;
-  width: 100%;
-  text-align: center;
+  gap: 0.8rem;
 }
 
 .contact-item {
-  border-radius: 6px;
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  background-color: white;
-  color: #495057;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: all 0.2s ease;
-  text-decoration: none;
-
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  border: 1px solid rgba(107, 11, 11, 0.2);
+  transition: all 0.3s ease;
+  
   &:hover {
-    background-color: #4a6fa5;
-    color: white;
+    background: rgba(107, 11, 11, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-}
-
-@media (max-width: 768px) {
-  .contact-icons {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-icons {
-    padding: 10px;
+    box-shadow: 0 2px 8px rgba(107, 11, 11, 0.2);
   }
 }
 
 .contact-item a {
-  color: inherit;
+  color: #6b0b0b;
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  
+  &:hover {
+    color: #4a0707;
+  }
 }
 
 .contact-item i {
-  font-size: 20px;
-  color: #4a6fa5;
+  font-size: 1.2rem;
+  color: #6b0b0b;
 }
 
-.contact-item:hover i {
-  color: white;
-}
-
-@media (max-width: 768px) {
-  .contact-item i {
-    font-size: 18px;
+/* RESPONSIVE: TABLET (≥768px) */
+@media (min-width: 768px) {
+  .contacto-container {
+    max-width: 700px;
+    padding: 0 2rem;
+  }
+  
+  .contacto-content {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1.5rem 1.5rem;
+    gap: 2rem;
+  }
+  
+  .logo-column {
+    flex: 1;
+  }
+  
+  .contact-icons {
+    flex: 1;
+  }
+  
+  .logo-secondary {
+    width: 90px;
   }
 }
 
-@media (max-width: 480px) {
-  .contact-item i {
-    font-size: 16px;
+/* RESPONSIVE: ESCRITORIO (≥1024px) */
+@media (min-width: 1024px) {
+  .contacto-container {
+    max-width: 800px;
+    padding: 0 3rem;
   }
-}
-
-//---------transparent hr--------------------//
-.transparent-hr {
-  border: none;
-  height: 1px;
-  background-color: #e0e0e0;
-  margin: 20px 0;
+  
+  .contacto-content {
+    padding: 2rem 2rem;
+    gap: 3rem;
+  }
+  
+  .logo-secondary {
+    width: 100px;
+  }
+  
+  .contact-item {
+    padding: 0.8rem 1.2rem;
+    
+    i {
+      font-size: 1.4rem;
+    }
+  }
 }

@@ -5,12 +5,12 @@ import { Modal, Button } from "react-bootstrap";
 // ------------------ ESTILOS ------------------ //
 import "../assets/scss/_03-Componentes/_HeaderUnificado.scss";
 
-// ------------------ COMPONENTE HEADER UNIFICADO ------------------ //
+
 function HeaderUnificado({ categories = [], onCategoryChange, searchQuery, setSearchQuery }) {
   const location = useLocation(); // Hook para saber en qué ruta estamos
-  const [showInfo, setShowInfo] = useState(false); // Estado para mostrar un modal informativo en lugar de cotizaciones
+  const [showInfo, setShowInfo] = useState(false); // Estado para modal informativo
 
-  // Funciones para abrir y cerrar el modal informativo
+  // Funciones para el modal
   const handleCloseInfo = () => setShowInfo(false);
   const handleShowInfo = () => setShowInfo(true);
 
@@ -21,12 +21,11 @@ function HeaderUnificado({ categories = [], onCategoryChange, searchQuery, setSe
     <>
       <header className="header-unificado">
         <div className="contenedor-header">
-
           {/* LOGO PRINCIPAL */}
           <div className="logo">
             <Link to="/">
               <img 
-                src="/img/02-logos/logocalculadoraretro1.png" 
+                src="../../public/img/02-logos/logomininotas.png" 
                 alt="Logo Mini Notas" 
                 className="logo-img" 
               />
@@ -40,13 +39,8 @@ function HeaderUnificado({ categories = [], onCategoryChange, searchQuery, setSe
             <Link to="/ayuda" className={isActive("/ayuda") ? "activo" : ""}>Ayuda</Link>
             <Link to="/main-notas" className={isActive("/main-notas") ? "activo" : ""}>Notas</Link>
           </nav>
-
-      
-
         </div>
       </header>
-
-
     </>
   );
 }

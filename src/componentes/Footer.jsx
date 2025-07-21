@@ -4,11 +4,21 @@ import FooterGondraWorldDev from './FooterGondraWorldDev';
 import { FiHelpCircle } from "react-icons/fi";
 import "../assets/scss/_03-Componentes/_Footer.scss";
 
+/**
+ * Componente Footer con la estética consistente del proyecto
+ * 
+ * Cambios realizados:
+ * - Adaptado a la paleta de colores bordó
+ * - Reestructurado según mobile-first
+ * - Breakpoints en 768px y 1024px
+ * - Estilos consistentes con MainNotas
+ */
 function Footer() {
   return (
     <footer className="footer-container">
       <div className="footer-content">
         <div className="footer-columns">
+          {/* Columna izquierda con logo */}
           <div className="footer-column">
             <a href="#" className="footer-logo-link">
               <img
@@ -19,6 +29,7 @@ function Footer() {
             </a>
           </div>
           
+          {/* Columna central con enlaces sociales */}
           <div className="footer-column">
             <div className="social-links">
               <a
@@ -60,6 +71,7 @@ function Footer() {
             </div>
           </div>
           
+          {/* Columna derecha con logo */}
           <div className="footer-column">
             <a href="#" className="footer-logo-link">
               <img
@@ -71,8 +83,10 @@ function Footer() {
           </div>
         </div>
         
+        {/* Divisor con estilo bordó */}
         <div className="footer-divider"></div>
         
+        {/* Copyright */}
         <div className="footer-copyright">
           <FooterGondraWorldDev />
         </div>
