@@ -1,12 +1,18 @@
+// Importaciones necesarias de React y librerías externas
 import React, { useEffect, useState } from "react";
-import Slider from "react-slick";
+import Slider from "react-slick"; // Carrusel de imágenes
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+// Importación de estilos SCSS específicos del componente
 import "../assets/scss/_03-Componentes/_ContactoFormularioSlider.scss";
 
+// Componente funcional principal
 const ContactoFormularioSlider = () => {
+  // Estado para almacenar productos desde un JSON externo
   const [productos, setProductos] = useState([]);
 
+  // useEffect para la carga inicial de productos al montar el componente
   useEffect(() => {
     const fetchProductos = async () => {
       try {
@@ -21,20 +27,23 @@ const ContactoFormularioSlider = () => {
     fetchProductos();
   }, []);
 
+  // Configuración del slider/carousel
   const settings = {
-    dots: false, // Cambiado a false para ocultar puntos de navegación
+    dots: false, // Sin puntos de navegación
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: true,
+    arrows: true, // Flechas visibles
   };
 
+  // Renderización del componente
   return (
     <div className="gridPadreContacto2">
       <div className="contact-form-slider-container">
+        {/* Formulario de contacto */}
         <div className="form-column box-shadow">
           <form
             className="contact-form"
@@ -42,6 +51,8 @@ const ContactoFormularioSlider = () => {
             target="_blank"
             method="post"
           >
+            <h2 className="form-title">MINI NOTAS - CONTACTO</h2>
+
             <div className="form-group">
               <label htmlFor="nombre">Nombre:</label>
               <input
@@ -53,6 +64,7 @@ const ContactoFormularioSlider = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="telefono">Teléfono:</label>
               <input
@@ -64,6 +76,7 @@ const ContactoFormularioSlider = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="email">Correo Electrónico:</label>
               <input
@@ -75,6 +88,7 @@ const ContactoFormularioSlider = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="asunto">Asunto del Mensaje:</label>
               <input
@@ -86,6 +100,7 @@ const ContactoFormularioSlider = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <label htmlFor="mensaje">Mensaje:</label>
               <textarea
@@ -97,6 +112,7 @@ const ContactoFormularioSlider = () => {
                 required
               />
             </div>
+
             <div className="text-end">
               <button type="submit" className="btn-submit">
                 ENVIAR
@@ -104,12 +120,26 @@ const ContactoFormularioSlider = () => {
             </div>
           </form>
         </div>
+
+        {/* Columna del slider con productos o multimedia */}
         <div className="slider-column box-shadow">
           <h2 className="slider-title">
-            <i className="bi bi-person-arms-up" /> ADMINISTRA TU DINERO{""}
-            <i className="bi bi-person-arms-up" />
+            <i className="bi bi-journal-text" /> MINI NOTAS <i className="bi bi-journal-text" />
           </h2>
-         <img className="gifTamaño" src="../../img/05-gif/dinero-animado.gif" alt="" />
+
+          {/* Slider dinámico con productos cargados */}
+          <Slider {...settings}>
+            {productos.map((producto, index) => (
+              <div key={index} className="slider-item">
+                <img
+                  src={producto.imagen}
+                  alt={producto.nombre}
+                  className="slider-image"
+                />
+                <p className="slider-caption">{producto.nombre}</p>
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
     </div>

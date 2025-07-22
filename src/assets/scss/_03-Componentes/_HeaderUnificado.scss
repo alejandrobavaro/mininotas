@@ -1,126 +1,110 @@
 /* ESTILOS HEADER UNIFICADO ADAPTADOS A LA ESTÉTICA DEL PROYECTO */
-
-/* Contenedor principal con fondo semi-transparente bordó */
+/* Estilos para el contenedor principal del header */
 .header-unificado {
-  background: rgba(128, 0, 0, 0.05);
-  padding: 0.5rem 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(107, 11, 11, 0.1);
-  border-bottom: 1px solid rgba(107, 11, 11, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: rgba(128, 0, 0, 0.05); /* Fondo semi-transparente */
+  padding: 0.2rem 0.5rem; /* Padding reducido */
+  box-shadow: 0 1px 2px rgba(107, 11, 11, 0.1); /* Sombra sutil */
+  border-bottom: 1px solid rgba(107, 11, 11, 0.2); /* Borde inferior */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente */
 }
 
-/* Contenido centrado con ancho máximo */
+/* Estilos para el contenedor interno del header */
 .contenedor-header {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 500px; /* Ancho máximo ajustado */
+  margin: 0 auto; /* Centrado */
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
+  flex-direction: row; /* Disposición en fila */
+  justify-content: space-between; /* Espacio entre elementos */
+  align-items: center; /* Centrado vertical */
+  gap: 0.3rem; /* Espacio entre elementos */
+  padding: 0 0.5rem; /* Padding reducido */
 }
 
-/* Logo con transición suave */
+/* Estilos para el contenedor del logo */
 .logo {
   display: flex;
   justify-content: center;
+  padding: 0; /* Sin padding adicional */
 }
 
+/* Estilos para la imagen del logo */
 .logo-img {
-  height: 36px;
-  width: auto;
-  transition: all 0.3s ease;
-  
+  height: 24px; /* Altura reducida */
+  width: auto; /* Ancho automático */
+  transition: all 0.3s ease; /* Transición suave para efectos hover */
+
   &:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
+    opacity: 0.9; /* Opacidad al pasar el ratón */
+    transform: scale(1.05); /* Escala al pasar el ratón */
   }
 }
 
-/* Navegación principal */
+/* Estilos para el contenedor de los enlaces de navegación */
 .nav-links {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Sin salto de línea */
   justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
+  gap: 0.5rem; /* Espacio entre elementos */
+  padding: 0; /* Sin padding adicional */
 }
 
 /* Estilos para los enlaces de navegación */
 .nav-links a {
-  color: #6b0b0b;
-  text-decoration: none;
-  font-size: 0.9rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  
+  color: #6b0b0b; /* Color del texto */
+  text-decoration: none; /* Sin subrayado */
+  font-size: 0.9rem; /* Tamaño de fuente */
+  padding: 0.2rem 0.5rem; /* Padding reducido */
+  border-radius: 4px; /* Bordes redondeados */
+  transition: all 0.3s ease; /* Transición suave para efectos hover */
+  font-weight: 500; /* Peso de la fuente */
+
   &:hover {
-    color: #4a0707;
-    background-color: rgba(107, 11, 11, 0.1);
+    color: #4a0707; /* Color del texto al pasar el ratón */
+    background-color: rgba(107, 11, 11, 0.1); /* Fondo al pasar el ratón */
   }
 }
 
-/* Enlace activo */
+/* Estilos para el enlace activo */
 .nav-links a.activo {
-  color: #4a0707;
-  background-color: rgba(107, 11, 11, 0.15);
-  font-weight: 600;
+  color: #4a0707; /* Color del texto */
+  background-color: rgba(107, 11, 11, 0.15); /* Fondo */
+  font-weight: 600; /* Peso de la fuente */
 }
 
-/* RESPONSIVE: TABLET (≥768px) */
+/* Ajustes para diferentes tamaños de pantalla */
+/* Estilos para tablet (768px o más) */
 @media (min-width: 768px) {
   .header-unificado {
-    padding: 0.75rem 1rem;
+    padding: 0.3rem 0.75rem; /* Padding ajustado */
   }
-  
+
   .contenedor-header {
-    max-width: 700px;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
+    max-width: 600px; /* Ancho máximo ajustado */
+    gap: 0.5rem; /* Espacio entre elementos */
   }
-  
+
   .logo-img {
-    height: 40px;
+    height: 28px; /* Altura ajustada */
   }
-  
+
   .nav-links {
-    gap: 0.8rem;
-    justify-content: flex-end;
-  }
-  
-  .nav-links a {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
+    gap: 0.7rem; /* Espacio entre elementos */
   }
 }
 
-/* RESPONSIVE: ESCRITORIO (≥1024px) */
+/* Estilos para escritorio (1024px o más) */
 @media (min-width: 1024px) {
   .contenedor-header {
-    max-width: 800px;
-    padding: 0 1.5rem;
+    max-width: 700px; /* Ancho máximo ajustado */
+    gap: 0.8rem; /* Espacio entre elementos */
   }
-  
+
   .header-unificado {
-    padding: 1rem 0;
+    padding: 0.4rem 0; /* Padding ajustado */
   }
-  
+
   .logo-img {
-    height: 44px;
-  }
-  
-  .nav-links {
-    gap: 1.2rem;
-  }
-  
-  .nav-links a {
-    font-size: 1.1rem;
-    padding: 0.6rem 1.2rem;
+    height: 30px; /* Altura ajustada */
   }
 }

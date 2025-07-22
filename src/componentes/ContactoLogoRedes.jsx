@@ -11,27 +11,11 @@ const ContactoLogoRedes = () => {
             <img
               alt="Logo principal"
               className="logo-main"
-              src="/img/02-logos/logomisgastos1.png"
+                         src="/img/02-logos/logomininotas.png"
             />
           </a>
           
-          <div className="logo-secondary-container">
-            <a href="#" className="logo-secondary-link">
-              <img
-                alt="Icono secundario"
-                className="logo-secondary"
-                src="/img/05-img-costados-larga/3.png"
-              />
-            </a>
 
-            <a href="#" className="logo-secondary-link">
-              <img
-                alt="Icono secundario"
-                className="logo-secondary"
-                src="/img/05-img-costados-larga/4.png"
-              />
-            </a>
-          </div>
         </div>
 
         {/* Columna de iconos de contacto */}

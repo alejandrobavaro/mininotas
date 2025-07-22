@@ -14,7 +14,9 @@ import "./assets/scss/_01-General/_App.scss";
 
 // ------------------ COMPONENTES ------------------ //
 import HeaderUnificado from "./componentes/HeaderUnificado"; // Header principal unificado
+
 import MainContent from "./componentes/MainContent"; // Página principal / inicio
+
 import MainWhatsappIcon from "./componentes/MainWhatsappIcon"; // Ícono flotante de WhatsApp
 import MainPublicidadSlider from "./componentes/MainPublicidadSlider"; // Slider de publicidad o contenido destacado
 import MainNotas from "./componentes/MainNotas"; // Vista principal de notas

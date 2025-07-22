@@ -1,25 +1,29 @@
+/* ----------- CONSULTAS AYUDA ----------- */
 .ayuda {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e0e0e0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgba(255, 255, 255, 0.02); // Fondo apenas visible y elegante
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(107, 11, 11, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0 auto;
 
+  /* Título principal */
   h2 {
-    font-size: 18px;
-    color: #4a6fa5;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: #7b2e2e;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
-  
+
+  /* Contenedor del formulario */
   form {
     display: flex;
     flex-direction: column;
@@ -28,11 +32,45 @@
     max-width: 600px;
   }
 
+  /* Subtítulo */
   h1 {
-    font-size: 20px;
-    color: #333;
+    font-size: 1.2rem;
+    color: #ffffff;
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 20px;
+    margin: 0 0 12px 0;
+  }
+}
+
+/* ----------- TABLET ≥768px ----------- */
+@media (min-width: 768px) {
+  .ayuda {
+    padding: 16px;
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 1.3rem;
+      margin-bottom: 14px;
+    }
+  }
+}
+
+/* ----------- DESKTOP ≥1024px ----------- */
+@media (min-width: 1024px) {
+  .ayuda {
+    padding: 20px;
+
+    h2 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+    }
   }
 }
