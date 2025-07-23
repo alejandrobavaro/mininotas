@@ -1,5 +1,4 @@
-// src/App.jsx
-
+// App.jsx (versión final con estética unificada)
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -7,83 +6,60 @@ import {
   Routes,
 } from "react-router-dom";
 
-// ------------------ ESTILOS GENERALES ------------------ //
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 import "./assets/scss/_01-General/_App.scss";
 
-// ------------------ COMPONENTES ------------------ //
-import HeaderUnificado from "./componentes/HeaderUnificado"; // Header principal unificado
-
-import MainContent from "./componentes/MainContent"; // Página principal / inicio
-
-import MainWhatsappIcon from "./componentes/MainWhatsappIcon"; // Ícono flotante de WhatsApp
-import MainPublicidadSlider from "./componentes/MainPublicidadSlider"; // Slider de publicidad o contenido destacado
-import MainNotas from "./componentes/MainNotas"; // Vista principal de notas
-import Footer from "./componentes/Footer"; // Footer general
-import ContactoLogoRedes from "./componentes/ContactoLogoRedes"; // Logos y redes en sección contacto
-import ContactoFormularioSlider from "./componentes/ContactoFormularioSlider"; // Formulario de contacto + slider
-import ConsultasAyuda from "./componentes/ConsultasAyuda"; // Sección de consultas / ayuda
+import HeaderUnificado from "./componentes/HeaderUnificado";
+import MainContent from "./componentes/MainContent";
+import MainWhatsappIcon from "./componentes/MainWhatsappIcon";
+import MainPublicidadSlider from "./componentes/MainPublicidadSlider";
+import MainNotas from "./componentes/MainNotas";
+import Footer from "./componentes/Footer";
+import ContactoLogoRedes from "./componentes/ContactoLogoRedes";
+import ContactoFormularioSlider from "./componentes/ContactoFormularioSlider";
+import ConsultasAyuda from "./componentes/ConsultasAyuda";
 
 function App() {
-  // ------------------ ESTADOS GLOBALES ------------------ //
-  const [searchQuery, setSearchQuery] = React.useState(''); // Estado para la búsqueda global
-  const [selectedCategory, setSelectedCategory] = React.useState(''); // Estado para la categoría seleccionada
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState('');
 
-  // ------------------ HANDLERS ------------------ //
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
   };
 
-  // ------------------ ESTRUCTURA DEL ROUTER ------------------ //
   return (
     <Router>
-      {/* Header principal con props de categorías, búsqueda y cambios */}
-      <HeaderUnificado 
-        categories={['Notas rápidas', 'Ideas', 'Pendientes']} 
-        onCategoryChange={handleCategoryChange}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+      <div className="app-container">
+        <HeaderUnificado 
+          categories={['Notas rápidas', 'Ideas', 'Pendientes']}
+          onCategoryChange={handleCategoryChange}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
 
-      <hr className="border border-0 opacity-20" />
+        <main className="main-content-wrapper">
+          <div className="content-wrapper">
+            <Routes>
+              <Route path="/" element={<MainContent />} />
+              <Route
+                path="/contacto"
+                element={
+                  <>
+                    <ContactoLogoRedes />
+                    <ContactoFormularioSlider />
+                  </>
+                }
+              />
+              <Route path="/ayuda" element={<ConsultasAyuda />} />
+              <Route path="/main-notas" element={<MainNotas />} />
+            </Routes>
+          </div>
+        </main>
 
-      <div className="main-content">
-        <div className="content">
-          <Routes>
-            {/* Ruta principal */}
-            <Route path="/" element={<MainContent />} />
-
-            {/* Ruta a sección de contacto */}
-            <Route
-              path="/contacto"
-              element={
-                <>
-                  <ContactoLogoRedes />
-                  <ContactoFormularioSlider />
-                </>
-              }
-            />
-
-            {/* Ruta a sección de ayuda */}
-            <Route path="/ayuda" element={<ConsultasAyuda />} />
-
-            {/* Ruta al historial o visualización de notas */}
-            <Route path="/main-notas" element={<MainNotas />} />
-          </Routes>
-        </div>
+        <MainPublicidadSlider />
+        <Footer />
+        {/* <MainWhatsappIcon /> */}
       </div>
-
-      <hr className="border border-0 opacity-20" />
-
-      {/* Slider de publicidad o contenido extra */}
-      <MainPublicidadSlider />
-
-      {/* Footer general */}
-      <Footer />
-
-      {/* Ícono flotante de WhatsApp */}
-      <MainWhatsappIcon />
     </Router>
   );
 }

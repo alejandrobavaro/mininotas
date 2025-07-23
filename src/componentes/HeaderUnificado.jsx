@@ -1,56 +1,100 @@
-// ----------- Importaciones React y librerías ----------- //
-// Importamos React y el hook useState para manejar el estado del componente
+// HeaderUnificado.jsx - Versión Minimalista Oscura
 import React, { useState } from "react";
-// Importamos Link y useLocation de react-router-dom para manejar la navegación y la ubicación actual
 import { Link, useLocation } from "react-router-dom";
-// ----------- Estilos ----------- //
-// Importamos los estilos SASS específicos para este componente
+import { FiBook, FiSearch, FiX, FiChevronDown } from "react-icons/fi";
 import "../assets/scss/_03-Componentes/_HeaderUnificado.scss";
 
-// ----------- Componente Header ----------- //
-// Definimos el componente funcional HeaderUnificado
-function HeaderUnificado() {
-  // useLocation es un hook que nos permite acceder a la ubicación actual de la aplicación
+function HeaderUnificado({ categories = [], onCategoryChange, searchQuery, setSearchQuery }) {
   const location = useLocation();
-  // useState es un hook que nos permite manejar el estado local del componente
-  // showInfo es una variable de estado que controla si el modal informativo está visible o no
-  const [showInfo, setShowInfo] = useState(false);
+  const [searchActive, setSearchActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // ----------- Handlers del Modal ----------- //
-  // Función para cerrar el modal informativo
-  const handleCloseInfo = () => setShowInfo(false);
-  // Función para abrir el modal informativo
-  const handleShowInfo = () => setShowInfo(true);
-
-  // ----------- Función para determinar si el link está activo ----------- //
-  // Función que verifica si la ruta actual coincide con la ruta proporcionada
   const isActive = (path) => location.pathname === path;
 
-  // Retornamos el JSX que define la estructura del componente
   return (
-    <header className="header-unificado">
-      <div className="contenedor-header">
-        {/* ----------- Logo principal que redirige a inicio ----------- */}
-        {/* Contenedor del logo que redirige a la página de inicio */}
-        <div className="logo">
-          <Link to="/">
-            <img
-              src="../../img/02-logos/logomininotas.png"
-              alt="Logo Mini Notas"
-              className="logo-img"
-            />
+    <header className="main-header">
+      <div className="header-content">
+        {/* Logo y marca */}
+        <div className="brand-container">
+          <Link to="/" className="brand-link">
+            <div className="logo-circle">
+              <FiBook className="logo-icon" />
+            </div>
+            <span className="app-name">Mini Notas</span>
           </Link>
         </div>
-        {/* ----------- Navegación solo con botón Notas ----------- */}
-        {/* Contenedor de los enlaces de navegación */}
-        <nav className="nav-links">
-          {/* Enlace a la página de notas, con una clase condicional para indicar si está activo */}
-          <Link to="/main-notas" className={isActive("/main-notas") ? "activo" : ""}>Notas</Link>
+
+        {/* Navegación principal */}
+        <nav className={`nav-container ${menuOpen ? 'open' : ''}`}>
+          <button 
+            className="mobile-close-btn"
+            onClick={() => setMenuOpen(false)}
+          >
+            <FiX />
+          </button>
+
+          <Link
+            to="/main-notas"
+            className={`nav-item ${isActive("/main-notas") ? 'active' : ''}`}
+            onClick={() => setMenuOpen(false)}
+          >
+            <span>Mis Notas</span>
+          </Link>
+
+          {/* Selector de categorías */}
+          {categories.length > 0 && (
+            <div className="category-selector">
+              <FiChevronDown className="dropdown-icon" />
+              <select
+                onChange={(e) => onCategoryChange(e.target.value)}
+                className="category-dropdown"
+              >
+                <option value="">Categorías</option>
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+          )}
         </nav>
+
+        {/* Búsqueda y controles */}
+        <div className="controls-container">
+          <div className={`search-wrapper ${searchActive ? 'active' : ''}`}>
+            <FiSearch className="search-icon" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar..."
+              className="search-input"
+              onFocus={() => setSearchActive(true)}
+              onBlur={() => !searchQuery && setSearchActive(false)}
+            />
+            {searchQuery && (
+              <button 
+                className="clear-search"
+                onClick={() => setSearchQuery('')}
+              >
+                <FiX />
+              </button>
+            )}
+          </div>
+
+          <button 
+            className="mobile-menu-btn"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <div className={`menu-icon ${menuOpen ? 'open' : ''}`}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+        </div>
       </div>
     </header>
   );
 }
 
-// Exportamos el componente para que pueda ser utilizado en otras partes de la aplicación
 export default HeaderUnificado;

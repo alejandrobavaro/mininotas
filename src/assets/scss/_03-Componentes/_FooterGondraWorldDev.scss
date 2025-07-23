@@ -1,55 +1,40 @@
-/* ---------- FOOTER GONDRA WORLD DEV ---------- */
-
-.trademarkGondraFooter {
+.developer-credit {
   text-align: center;
-  margin: 0;
-  padding: 12px 0;
-  font-family: 'Segoe UI', sans-serif;
+  margin-top: 1rem;
 }
 
-.textoFooterAutor {
-  border-radius: 8px;
-  width: 100%;
-  padding: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  color: #7b2e2e; // tono bordó elegante
-  margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.textoFooterGondraWorld {
+.developer-link {
+  color: #ccc;
+  text-decoration: none;
   font-size: 0.9rem;
-  color: #6c757d;
-  transition: transform 0.2s ease, color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
 
   &:hover {
+    color: #fff;
+    background-color: #3a3a3a;
     transform: scale(1.05);
-    color: #7b2e2e;
-  }
-
-  i {
-    font-size: 1rem;
-    margin: 0 4px;
   }
 }
 
-/* ------------------ RESPONSIVE ------------------ */
-@media (min-width: 768px) {
-  .textoFooterAutor {
-    padding: 16px;
-  }
+.developer-icon {
+  font-size: 1rem;
+  color: #6d78ff;
+}
 
-  .textoFooterGondraWorld {
+/* Responsive */
+@media (min-width: 768px) {
+  .developer-link {
     font-size: 1rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .textoFooterAutor {
-    padding: 20px;
-  }
-
-  .textoFooterGondraWorld {
+  .developer-link {
     font-size: 1.1rem;
   }
 }

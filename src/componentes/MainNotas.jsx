@@ -1,257 +1,250 @@
+// MainNotas.jsx (estructura similar pero con nuevas clases)
 import React, { useState, useEffect } from 'react';
-import { FaTrashAlt, FaEdit, FaSave, FaStar, FaRegStar, FaPlus } from 'react-icons/fa';
+import { 
+  FaTrashAlt, 
+  FaEdit, 
+  FaSave, 
+  FaStar, 
+  FaRegStar, 
+  FaPlus, 
+  FaThumbtack 
+} from 'react-icons/fa';
 import '../assets/scss/_03-Componentes/_MainNotas.scss';
 
-// Función para determinar el color del texto basado en el fondo
 const getTextColor = (bgColor) => {
-  if (!bgColor) return '#333';
-  
-  // Convertir color HEX a RGB
+  if (!bgColor) return '#1f2937';
   const hexToRgb = (hex) => {
     const r = parseInt(hex.substr(1, 2), 16);
     const g = parseInt(hex.substr(3, 2), 16);
     const b = parseInt(hex.substr(5, 2), 16);
     return [r, g, b];
   };
-  
   const [r, g, b] = hexToRgb(bgColor);
-  // Calcular luminosidad (fórmula de contraste WCAG)
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return luminance > 0.5 ? '#333' : '#fff';
+  return luminance > 0.5 ? '#1f2937' : '#f9fafb';
 };
 
-function MainNotas() {
-  // ------------------------------------------------------------
-  // ESTADOS PRINCIPALES
-  // ------------------------------------------------------------
+const MainNotas = () => {
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState({
     text: '',
-    color: '#800000',
+    color: '#e5e7eb',
     favorite: false,
-    id: null
+    pinned: false,
+    tags: [],
+    id: null,
+    createdAt: null
   });
   const [searchQuery, setSearchQuery] = useState('');
+  const [tagFilter, setTagFilter] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
-  // ------------------------------------------------------------
-  // EFECTOS
-  // ------------------------------------------------------------
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem('notes')) || [];
     setNotes(storedNotes);
   }, []);
 
   useEffect(() => {
-    if (notes.length > 0) {
-      localStorage.setItem('notes', JSON.stringify(notes));
-    }
+    localStorage.setItem('notes', JSON.stringify(notes));
   }, [notes]);
 
-  // ------------------------------------------------------------
-  // FUNCIONES DE MANEJO
-  // ------------------------------------------------------------
-  const handleAddNote = () => {
+  const handleAddOrEditNote = () => {
     if (!currentNote.text.trim()) return;
-    
+
+    const trimmedTags = currentNote.tags.map(t => t.trim().toLowerCase()).filter(Boolean);
+
     if (isEditing) {
-      const updatedNotes = notes.map(note => 
-        note.id === currentNote.id ? currentNote : note
+      const updated = notes.map(note =>
+        note.id === currentNote.id ? { ...currentNote, tags: trimmedTags } : note
       );
-      setNotes(updatedNotes);
+      setNotes(updated);
     } else {
       const newNote = {
         ...currentNote,
-        id: Date.now()
+        id: Date.now(),
+        createdAt: new Date().toISOString(),
+        tags: trimmedTags
       };
-      setNotes([...notes, newNote]);
+      setNotes([newNote, ...notes]);
     }
-    
+
+    resetNoteForm();
+  };
+
+  const resetNoteForm = () => {
     setCurrentNote({
       text: '',
-      color: '#800000',
+      color: '#e5e7eb',
       favorite: false,
-      id: null
+      pinned: false,
+      tags: [],
+      id: null,
+      createdAt: null
     });
     setIsEditing(false);
   };
 
-  const handleEditNote = (note) => {
-    setCurrentNote(note);
-    setIsEditing(true);
-  };
-
   const handleDeleteNote = (id) => {
-    const updatedNotes = notes.filter(note => note.id !== id);
-    setNotes(updatedNotes);
-    
-    if (isEditing && currentNote.id === id) {
-      setCurrentNote({
-        text: '',
-        color: '#800000',
-        favorite: false,
-        id: null
-      });
-      setIsEditing(false);
-    }
+    const confirm = window.confirm('¿Seguro que deseas eliminar esta nota?');
+    if (!confirm) return;
+    setNotes(notes.filter(n => n.id !== id));
+    if (currentNote.id === id) resetNoteForm();
   };
 
-  const toggleFavorite = (id) => {
-    const updatedNotes = notes.map(note => 
-      note.id === id ? { ...note, favorite: !note.favorite } : note
-    );
-    setNotes(updatedNotes);
-    
-    if (isEditing && currentNote.id === id) {
-      setCurrentNote(prev => ({
-        ...prev,
-        favorite: !prev.favorite
-      }));
-    }
+  const toggleProperty = (id, prop) => {
+    setNotes(notes.map(n => n.id === id ? { ...n, [prop]: !n[prop] } : n));
   };
 
-  // ------------------------------------------------------------
-  // FILTRADO Y RENDERIZADO
-  // ------------------------------------------------------------
+  const handleTagInput = (e) => {
+    const tags = e.target.value.split(',').slice(0, 5);
+    setCurrentNote({ ...currentNote, tags });
+  };
+
   const filteredNotes = notes
-    .filter(note => 
-      note.text && note.text.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .sort((a, b) => b.favorite - a.favorite);
+    .filter(n => n.text.toLowerCase().includes(searchQuery.toLowerCase()))
+    .filter(n => tagFilter ? n.tags.includes(tagFilter.toLowerCase()) : true)
+    .sort((a, b) => {
+      if (a.pinned !== b.pinned) return b.pinned - a.pinned;
+      if (a.favorite !== b.favorite) return b.favorite - a.favorite;
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
   return (
-    <div className="mainNotas-combined-container">
-      {/* Columna izquierda - Listado de notas */}
-      <div className="mainNotas-combined__listado">
-        <h2>Mis Notas</h2>
-        
-        <div className="mainNotas-combined__search">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Buscar notas..."
-          />
-        </div>
-        
-        <ul className="mainNotas-combined__notes-list">
-          {filteredNotes.map(note => (
-            <li 
-              key={note.id}
-              className={`mainNotas-combined__note-item ${note.favorite ? 'favorite' : ''}`}
-              style={{ 
-                backgroundColor: note.color,
-                color: getTextColor(note.color)
-              }}
-              onClick={() => handleEditNote(note)}
+    <div className="notes-app">
+      {/* Listado de notas */}
+      <div className="notes-list-container">
+        <div className="notes-list-header">
+          <h2>Mis Notas ({filteredNotes.length})</h2>
+          
+          <div className="notes-search">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar notas..."
+              className="search-input"
+            />
+            <input
+              type="text"
+              value={tagFilter}
+              onChange={(e) => setTagFilter(e.target.value)}
+              placeholder="Filtrar por etiquetas..."
+              className="search-input"
+            />
+            <button 
+              onClick={() => { setSearchQuery(''); setTagFilter(''); }}
+              className="clear-btn"
             >
-              <div className="mainNotas-combined__note-content">
+              Limpiar filtros
+            </button>
+          </div>
+        </div>
+
+        <div className="notes-grid">
+          {filteredNotes.map(note => (
+            <div
+              key={note.id}
+              className={`note-card ${note.pinned ? 'pinned' : ''} ${note.favorite ? 'favorite' : ''}`}
+              style={{ backgroundColor: note.color, color: getTextColor(note.color) }}
+              onClick={() => {
+                setCurrentNote(note);
+                setIsEditing(true);
+              }}
+            >
+              <div className="note-content">
                 <p>{note.text}</p>
-                <div className="mainNotas-combined__note-actions">
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorite(note.id);
-                    }}
-                    style={{ color: getTextColor(note.color) }}
-                  >
-                    {note.favorite ? <FaStar /> : <FaRegStar />}
-                  </button>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteNote(note.id);
-                    }}
-                    style={{ color: getTextColor(note.color) }}
-                  >
-                    <FaTrashAlt />
-                  </button>
+                <div className="note-meta">
+                  <span>{new Date(note.createdAt).toLocaleDateString()}</span>
+                  {note.tags.length > 0 && (
+                    <div className="note-tags">
+                      {note.tags.map(tag => (
+                        <span key={tag} className="tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
-            </li>
+              <div className="note-actions">
+                <button 
+                  onClick={(e) => { e.stopPropagation(); toggleProperty(note.id, 'pinned'); }}
+                  title={note.pinned ? 'Desanclar' : 'Anclar'}
+                >
+                  <FaThumbtack />
+                </button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); toggleProperty(note.id, 'favorite'); }}
+                  title={note.favorite ? 'Quitar favorito' : 'Marcar favorito'}
+                >
+                  {note.favorite ? <FaStar /> : <FaRegStar />}
+                </button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); handleDeleteNote(note.id); }}
+                  title="Eliminar"
+                >
+                  <FaTrashAlt />
+                </button>
+              </div>
+            </div>
           ))}
-        </ul>
-        
-        <button 
-          className="mainNotas-combined__new-btn"
-          onClick={() => {
-            setCurrentNote({
-              text: '',
-              color: '#800000',
-              favorite: false,
-              id: null
-            });
-            setIsEditing(false);
-          }}
-        >
+        </div>
+
+        <button className="new-note-btn" onClick={resetNoteForm}>
           <FaPlus /> Nueva Nota
         </button>
       </div>
-      
-      {/* Columna derecha - Editor de notas */}
-      <div className="mainNotas-combined__editor">
-        <h2>{isEditing ? 'Editar Nota' : 'Nueva Nota'}</h2>
+
+      {/* Editor de notas */}
+      <div className="note-editor-container">
+        <h2>{isEditing ? 'Editar Nota' : 'Crear Nota'}</h2>
         
-        <div className="mainNotas-combined__color-picker">
-          <label>Color de la nota:</label>
-          <input
-            type="color"
-            value={currentNote.color}
-            onChange={(e) => setCurrentNote({
-              ...currentNote,
-              color: e.target.value
-            })}
-          />
+        <div className="editor-controls">
+          <div className="color-picker">
+            <label>Color de fondo:</label>
+            <input
+              type="color"
+              value={currentNote.color}
+              onChange={(e) => setCurrentNote({ ...currentNote, color: e.target.value })}
+            />
+          </div>
         </div>
         
         <textarea
           value={currentNote.text}
-          onChange={(e) => setCurrentNote({
-            ...currentNote,
-            text: e.target.value
-          })}
+          onChange={(e) => setCurrentNote({ ...currentNote, text: e.target.value })}
           placeholder="Escribe tu nota aquí..."
-          className="mainNotas-combined__note-textarea"
-          style={{ 
+          className="note-textarea"
+          style={{
             backgroundColor: currentNote.color,
             color: getTextColor(currentNote.color)
           }}
         />
         
-        <div className="mainNotas-combined__editor-actions">
+        <div className="tags-input">
+          <input
+            type="text"
+            placeholder="Etiquetas (separadas por comas)"
+            value={currentNote.tags.join(', ')}
+            onChange={handleTagInput}
+          />
+        </div>
+        
+        <div className="editor-actions">
           <button
-            onClick={handleAddNote}
+            onClick={handleAddOrEditNote}
             disabled={!currentNote.text.trim()}
+            className="save-btn"
           >
-            <FaSave /> {isEditing ? 'Guardar Cambios' : 'Guardar Nota'}
+            <FaSave /> {isEditing ? 'Actualizar' : 'Guardar'}
           </button>
-          
           {isEditing && (
-            <button onClick={() => {
-              setCurrentNote({
-                text: '',
-                color: '#800000',
-                favorite: false,
-                id: null
-              });
-              setIsEditing(false);
-            }}>
+            <button onClick={resetNoteForm} className="cancel-btn">
               Cancelar
             </button>
           )}
-          
-          <button
-            onClick={() => toggleFavorite(currentNote.id)}
-            disabled={!isEditing}
-            className={currentNote.favorite ? 'favorite' : ''}
-          >
-            {currentNote.favorite ? <FaStar /> : <FaRegStar />}
-            {currentNote.favorite ? ' Quitar Favorito' : ' Marcar Favorito'}
-          </button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default MainNotas;

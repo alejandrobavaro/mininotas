@@ -53,7 +53,7 @@ const MainPublicidadSlider = () => {
   return (
     <div className="gridPadrePublicidad1">
       <div className="publicidad-grid-contenedor">
-        <div className="publicidad-grid fila-publicidad">
+        {/* <div className="publicidad-grid fila-publicidad">
           <div className="publicidad-container">
             <Slider {...settings}>
               {banners.map((banner, index) => (
@@ -83,7 +83,7 @@ const MainPublicidadSlider = () => {
                 ))}
             </Slider>
           </div>
-        </div>
+        </div> */}
 
        
       </div>

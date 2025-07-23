@@ -1,56 +1,20 @@
-//----------- CONTENEDOR PRINCIPAL DEL MAIN -----------//
-.main-content-container {
+/* _MainContent.scss - Versión final */
+.main-content {
   width: 100%;
-  overflow: hidden;
-  background-size: cover;
-  padding: 8px; // Espacio mínimo en mobile
-
+  background-color: white;
+  padding: 1rem;
+  
   @media (min-width: 768px) {
-    padding: 12px; // Tablet
+    padding: 1.5rem;
   }
 
   @media (min-width: 1024px) {
-    padding: 16px; // Desktop
+    padding: 2rem;
   }
 }
 
-//----------- WRAPPER DE CONTENIDO QUE ENVUELVE LAS NOTAS -----------//
-.main-content-container .content-wrapper {
-  width: 100%;
+.content-container {
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 8px; // padding mínimo en mobile
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  background-color: rgba(255, 255, 255, 0.02); // leve fondo para separar visualmente
-
-  @media (min-width: 768px) {
-    padding: 12px; // padding en tablet
-  }
-
-  @media (min-width: 1024px) {
-    padding: 16px; // padding en desktop
-    max-width: 1600px; // limite de ancho en escritorio para no expandir demasiado
-  }
-}
-
-//----------- ANIMACIÓN DE ELEMENTOS DECORATIVOS COMO HOJAS FLOTANTES -----------//
-.leaf {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background-image: url('../../../../img/04-img-banners/banner10.png');
-  background-size: contain;
-  animation: floating 6s ease-in-out infinite;
-}
-
-@keyframes floating {
-  0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-40px) translateX(15px) rotate(10deg);
-  }
-  100% {
-    transform: translateY(0) translateX(30px) rotate(0deg);
-  }
+  width: 100%;
 }
